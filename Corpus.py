@@ -50,12 +50,14 @@ class Corpus:
             
 
     def load(path):
-        nom = Path(path).name
+        nom = Path(path).name.replace(".csv","")
         corpus = Corpus(nom)
         if os.path.exists(path):
             df=pd.read_csv(path, sep="\t")
             #load to objet
-            for ligne in df:
-                corpus._add(ligne["id"],Document(ligne["titre"],ligne["auteur"],ligne["date"],ligne["url"],ligne["texte"]))
+            for ligne in df.to_dict("records"):
+                doc_id = int(ligne.pop("id"))
+                doc = Document(**ligne)
+                corpus._add(doc, doc_id)
 
         return corpus
