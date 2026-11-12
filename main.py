@@ -13,10 +13,6 @@ id2doc = {}
 id2aut = {}
 id_doc = 0
 
-#4.2.3
-def faddauthor(name):
-    pass
-
 #1.1 Hacker News
 param = urllib.parse.urlencode({"query": theme, "tags": "story", "hitsPerPage": 50})
 url = "https://hn.algolia.com/api/v1/search?" + param
