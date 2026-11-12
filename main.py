@@ -4,8 +4,10 @@ import xmltodict
 import urllib.parse
 import urllib.request
 from html import unescape
+
 from Document import Document
 from Author import Author
+from Corpus import Corpus
 
 theme = "climate"
 
@@ -35,12 +37,12 @@ for hit in donnees["hits"]:
 
     doc = Document(titre, auteur, date, lien, texte)
     id2doc[id_doc] = doc
-    id_doc += 1
 
     if auteur not in id2aut:
         id2aut[auteur] = Author(auteur)
     id2aut[auteur].add(id_doc, doc)
-   
+
+    id_doc += 1          # après l'ajout de l'auteur, pour garder le même id
 
 print("Documents Hacker News :", len(id2doc))
 
@@ -69,34 +71,43 @@ for entree in entrees:
 
     doc = Document(titre, auteur, date, lien, texte)
     id2doc[id_doc] = doc
-    id_doc += 1
- 
+
     if auteur not in id2aut:
         id2aut[auteur] = Author(auteur)
     id2aut[auteur].add(id_doc, doc)
-  
+
+    id_doc += 1
 
 print("Taille du corpus :", len(id2doc))
 
-
 print("Nombre de documents: ", len(id2doc))
-
 
 for i, doc in id2doc.items():
     nb_mots = len(doc.texte.split(" "))
     nb_phrases = len(doc.texte.split("."))
     print("Document", i, ":", nb_mots, "mots,", nb_phrases, "phrases")
 
+# --- Partie 3 : intégration de Corpus---
+corpus = Corpus("corpus_" + theme)
+for doc in id2doc.values():
+    corpus.add(doc)
+print(repr(corpus))
+
+corpus.afficher_par_date(5)
+corpus.afficher_par_titre(5)
+
+corpus.save()
+corpus2 = Corpus.load(corpus.nom + ".csv")
+print(repr(corpus2))
+
+# --- filtrage et statistiques ---
 id2doc = {i: doc for i, doc in id2doc.items() if len(doc.texte) >= 20}
 print("Après filtrage :", len(id2doc))
-
 
 chaine = " ".join(doc.texte for doc in id2doc.values())
 print("longueur de la chaine: ", len(chaine))
 
-
 nom = input("Entrez le nom de l'auteur : ")
-
 
 if nom in id2aut:
     author = id2aut[nom]
