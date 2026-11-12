@@ -17,3 +17,12 @@ class Document:
 
     def __str__(self):
         return self.titre
+
+    def to_dict(self):
+        return {
+            "titre": self.titre,
+            "auteur": self.auteur,
+            "date": self.date,
+            "url": self.url,
+            "texte": self.texte
+        }

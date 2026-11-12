@@ -1,9 +1,9 @@
 
 class Author:
-    def __init__(self, name, ndoc = 0, production = {}):
+    def __init__(self, name, ndoc = 0):
         self.name = name
         self.ndoc = ndoc
-        self.production = production
+        self.production = {}
 
 
     def add(self, doc_id, doc):
