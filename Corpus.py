@@ -1,4 +1,4 @@
-iimport pandas as pd
+import pandas as pd
 
 from Document import Document
 from Author import Author
@@ -32,7 +32,7 @@ class Corpus:
     def afficher_par_titre(self):
         docs = sorted(self.id2doc.values(), key=lambda d: d.titre.lower())
         for doc in docs:
-            print(f"~$ VRAIE maths.docx} ({doc.date})")
+            print(f"${doc.title} ({doc.date})")
 
     def __repr__(self):
         return f"Corpus '{self.nom}' : {self.ndoc} document(s), {self.naut} auteur(s)"
