@@ -40,6 +40,8 @@ for hit in donnees["hits"]:
     if auteur not in id2aut:
         id2aut[auteur] = Author(auteur)
     id2aut[auteur].add(id_doc, doc)
+    id2doc[id_doc] = Document(titre, auteur, date, lien, texte)
+    id_doc += 1
 
 print("Documents Hacker News :", len(id2doc))
 
@@ -73,6 +75,8 @@ for entree in entrees:
     if auteur not in id2aut:
         id2aut[auteur] = Author(auteur)
     id2aut[auteur].add(id_doc, doc)
+    id2doc[id_doc] = Document(titre, auteur, date, lien, texte)
+    id_doc += 1
 
 print("Taille du corpus :", len(id2doc))
 
