@@ -5,10 +5,12 @@ import urllib.parse
 import urllib.request
 from html import unescape
 from Document import Document
+from Author import Author
 
 theme = "climate"
 
 id2doc = {}
+id2aut = {}
 id_doc = 0
 
 #1.1 Hacker News
@@ -31,6 +33,13 @@ for hit in donnees["hits"]:
     date = hit["created_at"]
     lien = hit.get("url") or "https://news.ycombinator.com/item?id=" + str(hit["objectID"])
 
+    doc = Document(titre, auteur, date, lien, texte)
+    id2doc[id_doc] = doc
+    id_doc += 1
+    #4.2.3
+    if auteur not in id2aut:
+        id2aut[auteur] = Author(auteur)
+    id2aut[auteur].add(id_doc, doc)
     id2doc[id_doc] = Document(titre, auteur, date, lien, texte)
     id_doc += 1
 
@@ -59,6 +68,13 @@ for entree in entrees:
         auteurs = [auteurs]
     auteur = auteurs[0]["name"]
 
+    doc = Document(titre, auteur, date, lien, texte)
+    id2doc[id_doc] = doc
+    id_doc += 1
+    #4.2.3
+    if auteur not in id2aut:
+        id2aut[auteur] = Author(auteur)
+    id2aut[auteur].add(id_doc, doc)
     id2doc[id_doc] = Document(titre, auteur, date, lien, texte)
     id_doc += 1
 
@@ -80,3 +96,25 @@ print("Après filtrage :", len(id2doc))
 #3.4
 chaine = " ".join(doc.texte for doc in id2doc.values())
 print("longueur de la chaine: ", len(chaine))
+
+#4.2.4
+nom = input("Entrez le nom de l'auteur : ")
+
+if nom in id2aut:
+    author = id2aut[nom]
+
+    nombre = len(author.production)
+    total = 0
+
+    for doc in author.production.values():
+        total += len(doc.texte)
+
+    if nombre > 0:
+        moyenne = total / nombre
+    else:
+        moyenne = 0
+
+    print(f"Nombre de documents : {nombre}")
+    print(f"Taille moyenne : {moyenne:.2f} caractères")
+else:
+    print("Auteur inconnu")
