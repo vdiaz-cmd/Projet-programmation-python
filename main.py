@@ -36,12 +36,11 @@ for hit in donnees["hits"]:
     doc = Document(titre, auteur, date, lien, texte)
     id2doc[id_doc] = doc
     id_doc += 1
-    #4.2.3
+
     if auteur not in id2aut:
         id2aut[auteur] = Author(auteur)
     id2aut[auteur].add(id_doc, doc)
-    id2doc[id_doc] = Document(titre, auteur, date, lien, texte)
-    id_doc += 1
+   
 
 print("Documents Hacker News :", len(id2doc))
 
@@ -71,34 +70,33 @@ for entree in entrees:
     doc = Document(titre, auteur, date, lien, texte)
     id2doc[id_doc] = doc
     id_doc += 1
-    #4.2.3
+ 
     if auteur not in id2aut:
         id2aut[auteur] = Author(auteur)
     id2aut[auteur].add(id_doc, doc)
-    id2doc[id_doc] = Document(titre, auteur, date, lien, texte)
-    id_doc += 1
+  
 
 print("Taille du corpus :", len(id2doc))
 
-#3.1
+
 print("Nombre de documents: ", len(id2doc))
 
-#3.2
+
 for i, doc in id2doc.items():
     nb_mots = len(doc.texte.split(" "))
     nb_phrases = len(doc.texte.split("."))
     print("Document", i, ":", nb_mots, "mots,", nb_phrases, "phrases")
 
-#3.3
 id2doc = {i: doc for i, doc in id2doc.items() if len(doc.texte) >= 20}
 print("Après filtrage :", len(id2doc))
 
-#3.4
+
 chaine = " ".join(doc.texte for doc in id2doc.values())
 print("longueur de la chaine: ", len(chaine))
 
-#4.2.4
+
 nom = input("Entrez le nom de l'auteur : ")
+
 
 if nom in id2aut:
     author = id2aut[nom]
