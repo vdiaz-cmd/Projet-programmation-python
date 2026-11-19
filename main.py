@@ -38,7 +38,7 @@ for hit in donnees["hits"]:
     date = hit["created_at"]
     lien = hit.get("url") or "https://news.ycombinator.com/item?id=" + str(hit["objectID"])
 
-    doc = Document(titre, auteur, date, lien, texte)
+    doc = DocumentFactory.create(DocumentType.HACKER_NEWS, titre = titre, auteur = auteur, data = date, lien = lien, texte = texte)
     id2doc[id_doc] = doc
 
     if auteur not in id2aut:
