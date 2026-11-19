@@ -17,6 +17,7 @@ id2doc = {}
 id2aut = {}
 id_doc = 0
 
+instance_corpus = Corpus.get_instance()
 #1.1 Hacker News
 param = urllib.parse.urlencode({"query": theme, "tags": "story", "hitsPerPage": 50})
 url = "https://hn.algolia.com/api/v1/search?" + param
