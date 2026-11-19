@@ -1,4 +1,9 @@
 from datetime import datetime
+from enum import Enum
+
+class Source(Enum):
+    HACKER_NEWS = "HackerNews"
+    ARXIV = "Arxiv"
 
 class Document:
     def __init__(self,titre,auteur,date,url,texte):
