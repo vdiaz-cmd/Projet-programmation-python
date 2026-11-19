@@ -7,6 +7,7 @@ class Document:
         self.date = datetime.fromisoformat(date.replace("Z", ""))
         self.url = url
         self.texte = texte
+        self.type = "document"
 
     def afficher(self):
         print("Titre :", self.titre)
@@ -25,4 +26,38 @@ class Document:
             "date": self.date,
             "url": self.url,
             "texte": self.texte
+            "type": self.type
         }
+
+class HackerNewsDocument(Document):
+    def __init__(self, titre,auteur,date,url,texte,nb_comments=0):
+     # super() = la classe mère : on lui laisse remplir les attributs communs
+        super().__init__(titre,auteur,date,url,texte)
+        self.nb_comments = nb_comments
+        self.type = "Hackernews"
+
+    #accesseur
+    def get_nb_comments(self):
+        return self.nb_comments
+
+    #mutateur
+    def set_nb_comments(self, nb_comments):
+        if not isinstance(nb_comments,int) or nb_comments < 0:
+            print("Nombre de commentaires invalides")
+        else:
+            self.nb_comments=nb_comments
+
+    def __str__(self):
+        return f"[Hacker News] {self.titre} ({self.nb_comments} commentaires)"
+
+
+
+
+
+
+
+
+
+
+
+    
