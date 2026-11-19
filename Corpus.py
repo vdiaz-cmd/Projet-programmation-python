@@ -13,7 +13,11 @@ class Corpus:
         self.id2doc = {}   # clé : doc_id, valeur : objet Document
         self.ndoc = 0
         self.naut = 0
-
+    @classmethod                  
+    def get_instance(cls):
+        if cls.instance is None:   
+            cls.instance = Corpus("instance")
+        return cls.instance   
     def add(self, doc):
         doc_id = self.ndoc
         self.id2doc[doc_id] = doc
@@ -49,5 +53,6 @@ class Corpus:
             df = pd.read_csv(path, sep="\t", keep_default_na=False)
             for ligne in df.to_dict("records"):
                 ligne.pop("id")
+                ligne.pop("type")
                 corpus.add(Document(**ligne))
         return corpus
