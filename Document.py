@@ -1,7 +1,7 @@
 from datetime import datetime
 from enum import Enum
 
-class Source(Enum):
+class DocumentType(Enum):
     HACKER_NEWS = "HackerNews"
     ARXIV = "Arxiv"
     DOCUMENT = "Document"
@@ -13,7 +13,7 @@ class Document:
         self.date = datetime.fromisoformat(date.replace("Z", ""))
         self.url = url
         self.texte = texte
-        self.type = Source.DOCUMENT
+        self.type = DocumentType.DOCUMENT
 
     def afficher(self):
         print("Titre :", self.titre)
@@ -40,7 +40,7 @@ class HackerNewsDocument(Document):
      # super() = la classe mère : on lui laisse remplir les attributs communs
         super().__init__(titre,auteur,date,url,texte)
         self.nb_comments = nb_comments
-        self.type = Source.HACKER_NEWS
+        self.type = DocumentType.HACKER_NEWS
 
     #accesseur
     def get_nb_comments(self):
@@ -61,10 +61,9 @@ class ArxivDocument(Document):
     def __init__(self, titre, auteur, date, url, texte, autres_auteurs):
         super().__init__(titre, auteur, date, url, texte)
         self.autres_auteurs = autres_auteurs
-        self.genre = Source.ARXIV        
+        self.type = DocumentType.ARXIV        
     def __str__(self):
-        return super().__str__().concat("autres auteurs: ",self.autres_auteurs)
-
-    def get_genre(self):
-        return self.genre
+        return super().__str__() + "autres auteurs: ".join(self.autres_auteurs)
+    def get_type(self):
+        return self.type
     

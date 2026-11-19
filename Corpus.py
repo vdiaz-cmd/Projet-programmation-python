@@ -49,5 +49,6 @@ class Corpus:
             df = pd.read_csv(path, sep="\t", keep_default_na=False)
             for ligne in df.to_dict("records"):
                 ligne.pop("id")
+                ligne.pop("type")
                 corpus.add(Document(**ligne))
         return corpus

@@ -9,7 +9,7 @@ from Document import Document
 from Author import Author
 from Corpus import Corpus
 from DocumentFactory import DocumentFactory
-from Document import Source
+from Document import DocumentType
 
 theme = "climate"
 
@@ -72,7 +72,7 @@ for entree in entrees:
     auteur = auteurs[0]["name"]
     autres_auteurs = [a["name"] for a in auteurs[1:]]
 
-    doc = DocumentFactory.create(Source.ARXIV, titre = titre, auteur = auteur,date = date, url = lien, texte = texte, autres_auteurs = autres_auteurs)
+    doc = DocumentFactory.create(DocumentType.ARXIV, titre = titre, auteur = auteur,date = date, url = lien, texte = texte, autres_auteurs = autres_auteurs)
     id2doc[id_doc] = doc
 
     if auteur not in id2aut:

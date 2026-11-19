@@ -1,15 +1,15 @@
 from Document import HackerNewsDocument
-from Document import Source
+from Document import DocumentType
 from Document import ArxivDocument
 
 class DocumentFactory:
     @staticmethod
-    def create(source, **fields):
-        if source == Source.HACKER_NEWS:
+    def create(doc_type, **fields):
+        if doc_type == DocumentType.HACKER_NEWS:
             return HackerNewsDocument(**fields)
             pass
 
-        if source == Source.ARXIV:
+        if doc_type == DocumentType.ARXIV:
             return ArxivDocument(**fields)
 
-        raise ValueError("Source inconnu : " + source)
+        raise ValueError("Source inconnu : " + doc_type)
