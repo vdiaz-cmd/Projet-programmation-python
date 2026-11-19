@@ -1,4 +1,4 @@
-from HackerNewsDocument import HackerNewsDocument
+from Document import HackerNewsDocument
 from Document import Source
 from ArxivDocument import ArxivDocument
 
