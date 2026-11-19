@@ -39,6 +39,7 @@ for hit in donnees["hits"]:
     lien = hit.get("url") or "https://news.ycombinator.com/item?id=" + str(hit["objectID"])
 
     doc = DocumentFactory.create(DocumentType.HACKER_NEWS, titre = titre, auteur = auteur, data = date, lien = lien, texte = texte)
+    instance_corpus.add(doc)
     id2doc[id_doc] = doc
 
     if auteur not in id2aut:
@@ -75,6 +76,7 @@ for entree in entrees:
 
     doc = DocumentFactory.create(DocumentType.ARXIV, titre = titre, auteur = auteur,date = date, url = lien, texte = texte, autres_auteurs = autres_auteurs)
     id2doc[id_doc] = doc
+    instance_corpus.add(doc)
 
     if auteur not in id2aut:
         id2aut[auteur] = Author(auteur)
