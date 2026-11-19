@@ -13,7 +13,11 @@ class Corpus:
         self.id2doc = {}   # clé : doc_id, valeur : objet Document
         self.ndoc = 0
         self.naut = 0
-
+    @classmethod                  
+    def get_instance(cls):
+        if cls.instance is None:   
+            cls.instance = Corpus("instance")
+        return cls.instance   
     def add(self, doc):
         doc_id = self.ndoc
         self.id2doc[doc_id] = doc
