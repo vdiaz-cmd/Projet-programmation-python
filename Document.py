@@ -4,6 +4,7 @@ from enum import Enum
 class Source(Enum):
     HACKER_NEWS = "HackerNews"
     ARXIV = "Arxiv"
+    DOCUMENT = "Document"
 
 class Document:
     def __init__(self,titre,auteur,date,url,texte):
@@ -12,7 +13,7 @@ class Document:
         self.date = datetime.fromisoformat(date.replace("Z", ""))
         self.url = url
         self.texte = texte
-        self.type = "document"
+        self.type = Source.DOCUMENT
 
     def afficher(self):
         print("Titre :", self.titre)
@@ -30,7 +31,7 @@ class Document:
             "auteur": self.auteur,
             "date": self.date,
             "url": self.url,
-            "texte": self.texte
+            "texte": self.texte,
             "type": self.type
         }
 
@@ -39,7 +40,7 @@ class HackerNewsDocument(Document):
      # super() = la classe mère : on lui laisse remplir les attributs communs
         super().__init__(titre,auteur,date,url,texte)
         self.nb_comments = nb_comments
-        self.type = "Hackernews"
+        self.type = Source.HACKER_NEWS
 
     #accesseur
     def get_nb_comments(self):
@@ -56,13 +57,14 @@ class HackerNewsDocument(Document):
         return f"[Hacker News] {self.titre} ({self.nb_comments} commentaires)"
 
 
+class ArxivDocument(Document):
+    def __init__(self, titre, auteur, date, url, texte, autres_auteurs):
+        super().__init__(titre, auteur, date, url, texte)
+        self.autres_auteurs = autres_auteurs
+        self.genre = Source.ARXIV        
+    def __str__(self):
+        return super().__str__().concat("autres auteurs: ",self.autres_auteurs)
 
-
-
-
-
-
-
-
-
+    def get_genre(self):
+        return self.genre
     

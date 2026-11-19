@@ -1,12 +1,12 @@
 from Document import HackerNewsDocument
 from Document import Source
-from ArxivDocument import ArxivDocument
+from Document import ArxivDocument
 
 class DocumentFactory:
     @staticmethod
     def create(source, **fields):
         if source == Source.HACKER_NEWS:
-            #return HackerNewsDocument(titre, auteur, date, lien, texte)
+            return HackerNewsDocument(**fields)
             pass
 
         if source == Source.ARXIV:
