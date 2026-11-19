@@ -63,7 +63,7 @@ class ArxivDocument(Document):
         self.autres_auteurs = autres_auteurs
         self.type = DocumentType.ARXIV        
     def __str__(self):
-        return super().__str__() + "autres auteurs: ".join(self.autres_auteurs)
+        return "[Arxiv]" + self.titre + "auteur" + self.auteur + "autres auteurs: ".join(self.autres_auteurs)
     def get_type(self):
         return self.type
     
