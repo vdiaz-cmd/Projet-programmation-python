@@ -61,7 +61,16 @@ class ArxivDocument(Document):
     def __init__(self, titre, auteur, date, url, texte, autres_auteurs):
         super().__init__(titre, auteur, date, url, texte)
         self.autres_auteurs = autres_auteurs
-        self.type = DocumentType.ARXIV        
+        self.type = DocumentType.ARXIV
+
+    def get_autres_auteurs(self):
+        return self.autres_auteurs
+
+    def add_to_autres_auteurs(self, autre_auteur):
+        if len(autre_auteur) < 0:
+            return
+        self.autres_auteurs.append(autre_auteur)
+               
     def __str__(self):
         return "[Arxiv]" + self.titre + "auteur" + self.auteur + "autres auteurs: ".join(self.autres_auteurs)
     def get_type(self):
