@@ -12,4 +12,4 @@ class DocumentFactory:
         if doc_type == DocumentType.ARXIV:
             return ArxivDocument(**fields)
 
-        raise ValueError("Source inconnu : " + doc_type)
+        raise ValueError("Le type de document inconnu : " + doc_type)
