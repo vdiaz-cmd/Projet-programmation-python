@@ -29,10 +29,10 @@ class Document:
         return {
             "titre": self.titre,
             "auteur": self.auteur,
-            "date": self.date,
+            "date": self.date.isoformat(),
             "url": self.url,
             "texte": self.texte,
-            "type": self.type
+            "type": self.type.value
         }
 
 class HackerNewsDocument(Document):
@@ -56,14 +56,27 @@ class HackerNewsDocument(Document):
     def __str__(self):
         return f"[Hacker News] {self.titre} ({self.nb_comments} commentaires)"
 
+    def get_type(self):
+        return self.type
+
 
 class ArxivDocument(Document):
     def __init__(self, titre, auteur, date, url, texte, autres_auteurs):
         super().__init__(titre, auteur, date, url, texte)
         self.autres_auteurs = autres_auteurs
         self.type = DocumentType.ARXIV        
+
     def __str__(self):
-        return super().__str__() + "autres auteurs: ".join(self.autres_auteurs)
+        return f"[Arxiv] {self.titre} (autres auteurs : {', '.join(self.autres_auteurs)})"
+
     def get_type(self):
         return self.type
-    
+
+    def get_autres_auteurs(self):
+        return self.autres_auteurs
+
+    def add_to_autres_auteurs(self, autre_auteur):
+        if not isinstance(autre_auteur, str) or autre_auteur == "":
+            print("Auteur invalide")
+            return
+        self.autres_auteurs.append(autre_auteur)

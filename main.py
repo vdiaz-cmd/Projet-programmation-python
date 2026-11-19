@@ -4,7 +4,7 @@ import xmltodict
 import urllib.parse
 import urllib.request
 from html import unescape
-
+from Document import HackerNewsDocument, ArxivDocument
 from Document import Document
 from Author import Author
 from Corpus import Corpus
@@ -37,7 +37,9 @@ for hit in donnees["hits"]:
     date = hit["created_at"]
     lien = hit.get("url") or "https://news.ycombinator.com/item?id=" + str(hit["objectID"])
 
-    doc = Document(titre, auteur, date, lien, texte)
+    doc = DocumentFactory.create(DocumentType.HACKER_NEWS, titre=titre, auteur=auteur,
+                                 date=date, url=lien, texte=texte,
+                                 nb_comments=hit.get("num_comments") or 0)
     id2doc[id_doc] = doc
 
     if auteur not in id2aut:
@@ -90,8 +92,9 @@ for i, doc in id2doc.items():
     nb_phrases = len(doc.texte.split("."))
     print("Document", i, ":", nb_mots, "mots,", nb_phrases, "phrases")
 
-# --- Partie 3 : intégration de Corpus---
-corpus = Corpus("corpus_" + theme)
+
+corpus = Corpus.get_instance("corpus_" + theme)
+
 for doc in id2doc.values():
     corpus.add(doc)
 print(repr(corpus))
@@ -130,3 +133,29 @@ if nom in id2aut:
     print(f"Taille moyenne : {moyenne:.2f} caractères")
 else:
     print("Auteur inconnu")
+
+#test td5 partie 3 3.1
+    
+doc1 = HackerNewsDocument("Titre 1", "Alice", "2024-01-01", "http://...", "Texte...", nb_comments=5)
+doc2 = ArxivDocument("Titre 2", "Bob", "2024-02-01", "http://...", "Texte...",
+                     autres_auteurs=["Carlos", "Diana"])
+
+assert doc1.type == DocumentType.HACKER_NEWS
+assert doc2.type == DocumentType.ARXIV
+
+n_avant = corpus.ndoc
+corpus.add(doc1)
+corpus.add(doc2)
+
+assert corpus.ndoc == n_avant + 2
+assert "Alice" in corpus.authors
+assert "Bob" in corpus.authors
+print("Partie 3.1 OK")
+
+#test td5 partie 4.1 patron Singleton
+
+c1 = Corpus.get_instance("corpus_" + theme)
+c2 = Corpus.get_instance("otro_nombre")
+assert c1 is c2          # es el mismo objeto
+print("Singleton OK")
+

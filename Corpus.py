@@ -7,17 +7,23 @@ from Author import Author
 
 
 class Corpus:
+
+    _instance = None
+    
+    @classmethod
+    def get_instance(cls, nom="corpus"):
+        if cls._instance is None:
+            cls._instance = cls(nom)
+        return cls._instance
+
+
     def __init__(self, nom):
         self.nom = nom
         self.authors = {}  # clé : nom de l'auteur, valeur : objet Author
         self.id2doc = {}   # clé : doc_id, valeur : objet Document
         self.ndoc = 0
         self.naut = 0
-    @classmethod                  
-    def get_instance(cls):
-        if cls.instance is None:   
-            cls.instance = Corpus("instance")
-        return cls.instance   
+ 
     def add(self, doc):
         doc_id = self.ndoc
         self.id2doc[doc_id] = doc
@@ -36,7 +42,7 @@ class Corpus:
     def afficher_par_titre(self, n=5):
         docs = sorted(self.id2doc.values(), key=lambda d: d.titre.lower())
         for doc in docs[:n]:
-            print(f"{doc.titre} ({doc.date})")
+            print(f"{doc} ({doc.date})")
 
     def __repr__(self):
         return f"Corpus '{self.nom}' : {self.ndoc} document(s), {self.naut} auteur(s)"
