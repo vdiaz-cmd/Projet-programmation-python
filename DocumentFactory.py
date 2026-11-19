@@ -1,4 +1,4 @@
-from Document import HackerNewsDocument, ArxivDocument, DocumentType
+from Document import Document, HackerNewsDocument, ArxivDocument, DocumentType
 
 class DocumentFactory:
     @staticmethod
@@ -7,4 +7,6 @@ class DocumentFactory:
             return HackerNewsDocument(**fields)
         if doc_type == DocumentType.ARXIV:
             return ArxivDocument(**fields)
-        raise ValueError(f"Source inconnu : {doc_type}")
+        if doc_type == DocumentType.DOCUMENT:
+            return Document(**fields)
+        raise ValueError(f"DocumentType inconnu : {doc_type}")
